@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void run() {
 
-                            FetchData fetchData = new FetchData("http://122.239.217.109/Test/FetchTest.php");
+                            FetchData fetchData = new FetchData("http://122.239.219.224/Test/FetchTest.php");
                             if (fetchData.startFetch()) {
 
                                 if (fetchData.onComplete()) {

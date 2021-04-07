@@ -44,7 +44,7 @@ public class LogIn extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String fullname, username, password, email;
+                final String username, password;
                 username = String.valueOf(textInputEditTextUsername.getText());
                 password = String.valueOf(textInputEditTextPassword.getText());
 
@@ -63,10 +63,10 @@ public class LogIn extends AppCompatActivity {
                             field[1] = "password";
                             //Creating array for data
                             String[] data = new String[2];
-                            data[0] = "username";
-                            data[1] = "password";
+                            data[0] = username;
+                            data[1] = password;
 
-                            PutData putData = new PutData("http://122.239.217.109/LoginRegister/login.php", "POST", field, data);
+                            PutData putData = new PutData("http://122.239.219.224/LoginRegister/login.php", "POST", field, data);
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {
                                     progressBar.setVisibility(View.GONE);
