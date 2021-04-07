@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -16,36 +15,41 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
 
-public class SignUP extends AppCompatActivity {
+public class LogIn extends AppCompatActivity {
 
-    TextInputEditText textInputEditTextFullname, textInputEditTextUsername, textInputEditTextPassword, textInputEditTextEmail;
-    Button buttonSignUp;
-    TextView textViewLogin;
+    TextInputEditText textInputEditTextUsername, textInputEditTextPassword;
+    Button buttonLogin;
+    TextView textViewSignUp;
     ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_u_p);
+        setContentView(R.layout.activity_log_in);
 
-        textInputEditTextFullname = findViewById(R.id.fullname);
         textInputEditTextUsername = findViewById(R.id.username);
         textInputEditTextPassword = findViewById(R.id.password);
-        textInputEditTextEmail = findViewById(R.id.email);
-        buttonSignUp = findViewById(R.id.buttonSignUp);
-        textViewLogin = findViewById(R.id.loginText);
-        progressBar =  findViewById(R.id.progress);
+        buttonLogin = findViewById(R.id.buttonLogin);
+        textViewSignUp = findViewById(R.id.signUpText);
+        progressBar = findViewById(R.id.progress);
 
-        buttonSignUp.setOnClickListener(new View.OnClickListener() {
+        textViewSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String fullname,username,password,email;
-                fullname = String.valueOf(textInputEditTextFullname.getText());
+                Intent intent = new Intent(getApplicationContext(), SignUp.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String fullname, username, password, email;
                 username = String.valueOf(textInputEditTextUsername.getText());
                 password = String.valueOf(textInputEditTextPassword.getText());
-                email = String.valueOf(textInputEditTextEmail.getText());
 
-                if(!fullname.equals("")&&!username.equals("")&&!password.equals("")&&!email.equals("")) {
-
+                if(!username.equals("")&&!password.equals(""))
+                {
                     //Start ProgressBar first (Set visibility VISIBLE)
                     progressBar.setVisibility(View.VISIBLE);
                     Handler handler = new Handler(Looper.getMainLooper());
@@ -54,27 +58,23 @@ public class SignUP extends AppCompatActivity {
                         public void run() {
                             //Starting Write and Read data with URL
                             //Creating array for parameters
-                            String[] field = new String[4];
-                            field[0] = "fullname";
-                            field[1] = "username";
-                            field[2] = "password";
-                            field[3] = "email";
+                            String[] field = new String[2];
+                            field[0] = "username";
+                            field[1] = "password";
                             //Creating array for data
-                            String[] data = new String[4];
-                            data[0] = "fullname";
-                            data[1] = "username";
-                            data[0] = "password";
-                            data[1] = "email";
+                            String[] data = new String[2];
+                            data[0] = "username";
+                            data[1] = "password";
 
-                            PutData putData = new PutData("http://122.239.217.107/LoginRegister/singup.php", "POST", field, data);
+                            PutData putData = new PutData("http://122.239.217.109/LoginRegister/login.php", "POST", field, data);
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {
                                     progressBar.setVisibility(View.GONE);
                                     String result = putData.getResult();
-                                    if(result.equals("Sign Up Success"))
+                                    if(result.equals("Login Success"))
                                     {
                                         Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(getApplicationContext(),LogIN.class);
+                                        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                                         startActivity(intent);
                                         finish();
                                     }
@@ -90,14 +90,8 @@ public class SignUP extends AppCompatActivity {
                         }
                     });
                 }
-                else
-                {
-                    Toast.makeText(getApplicationContext(),"All fields required",Toast.LENGTH_SHORT).show();
-                }
             }
         });
-
-
 
     }
 }

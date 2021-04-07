@@ -15,33 +15,44 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
 
-public class LogIN extends AppCompatActivity {
+public class SignUp extends AppCompatActivity {
 
-    TextInputEditText textInputEditTextUsername, textInputEditTextPassword;
-    Button buttonLogin;
-    TextView textViewSignUp;
+    TextInputEditText textInputEditTextFullname, textInputEditTextUsername, textInputEditTextPassword, textInputEditTextEmail;
+    Button buttonSignUp;
+    TextView textViewLogin;
     ProgressBar progressBar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_log_i_n);
+        setContentView(R.layout.activity_sign_up);
 
+        textInputEditTextFullname = findViewById(R.id.fullname);
         textInputEditTextUsername = findViewById(R.id.username);
         textInputEditTextPassword = findViewById(R.id.password);
-        buttonLogin = findViewById(R.id.buttonSignUp);
-        textViewSignUp = findViewById(R.id.signUpText);
-        progressBar = findViewById(R.id.progress);
+        textInputEditTextEmail = findViewById(R.id.email);
+        buttonSignUp = findViewById(R.id.buttonSignUp);
+        textViewLogin = findViewById(R.id.loginText);
+        progressBar =  findViewById(R.id.progress);
 
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
+        textViewLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String fullname, username, password, email;
+                Intent intent = new Intent(getApplicationContext(), LogIn.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        buttonSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String fullname,username,password,email;
+                fullname = String.valueOf(textInputEditTextFullname.getText());
                 username = String.valueOf(textInputEditTextUsername.getText());
                 password = String.valueOf(textInputEditTextPassword.getText());
+                email = String.valueOf(textInputEditTextEmail.getText());
 
-                if(!fullname.equals("")&&!username.equals("")&&!password.equals("")&&!email.equals(""))
-                {
+                if(!fullname.equals("")&&!username.equals("")&&!password.equals("")&&!email.equals("")) {
+
                     //Start ProgressBar first (Set visibility VISIBLE)
                     progressBar.setVisibility(View.VISIBLE);
                     Handler handler = new Handler(Looper.getMainLooper());
@@ -59,10 +70,10 @@ public class LogIN extends AppCompatActivity {
                             String[] data = new String[4];
                             data[0] = "fullname";
                             data[1] = "username";
-                            data[0] = "password";
-                            data[1] = "email";
+                            data[2] = "password";
+                            data[3] = "email";
 
-                            PutData putData = new PutData("http://122.239.217.107/LoginRegister/singup.php", "POST", field, data);
+                            PutData putData = new PutData("http://122.239.217.109/LoginRegister/signup.php", "POST", field, data);
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {
                                     progressBar.setVisibility(View.GONE);
@@ -70,7 +81,7 @@ public class LogIN extends AppCompatActivity {
                                     if(result.equals("Sign Up Success"))
                                     {
                                         Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(getApplicationContext(),LogIN.class);
+                                        Intent intent = new Intent(getApplicationContext(), LogIn.class);
                                         startActivity(intent);
                                         finish();
                                     }
@@ -86,8 +97,14 @@ public class LogIN extends AppCompatActivity {
                         }
                     });
                 }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"All fields required",Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
+
 
     }
 }
