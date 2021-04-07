@@ -68,10 +68,10 @@ public class SignUp extends AppCompatActivity {
                             field[3] = "email";
                             //Creating array for data
                             String[] data = new String[4];
-                            data[0] = "fullname";
-                            data[1] = "username";
-                            data[2] = "password";
-                            data[3] = "email";
+                            data[0] = fullname;
+                            data[1] = username;
+                            data[2] = password;
+                            data[3] = email;
 
                             PutData putData = new PutData("http://122.239.217.109/LoginRegister/signup.php", "POST", field, data);
                             if (putData.startPut()) {
