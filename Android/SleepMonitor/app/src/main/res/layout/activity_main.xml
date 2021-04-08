@@ -40,4 +40,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
+    <com.github.mikephil.charting.charts.LineChart
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/tempLineChart"></com.github.mikephil.charting.charts.LineChart>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

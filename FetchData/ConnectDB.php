@@ -1,5 +1,5 @@
 <?php
-require "TestDataBaseConfig.php";
+require "DBConfig.php";
 
 class TestDataBase
 {
@@ -38,14 +38,18 @@ class TestDataBase
     {
         $this->sql = "SELECT * FROM `mpu6050` WHERE 1";//select the table
         $result = mysqli_query($this->connect, $this->sql);//implement the sql
-        $row = mysqli_fetch_assoc($result);
-        if (mysqli_num_rows($result) != 0) 
-        {
-            $resultText = $row['time'];
-            return $resultText;
-        }  
-        else
-        return false;   
+        $rows = array();
+                if (mysqli_num_rows($result) != 0) {
+                    while ($r = mysqli_fetch_assoc($result)) {
+                        $rows[] = $r;
+                    }
+//                    mysqli_close($this->connect);
+                    return json_encode($rows);
+                }
+                else
+                {
+                    return false;
+                }
     }
 
 }

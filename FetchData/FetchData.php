@@ -1,5 +1,5 @@
 <?php
-require "TestDataBase.php";
+require "ConnectDB.php";
 $db = new TestDataBase();
     if ($db->dbConnect()) {
         echo $db->FetchTime();       

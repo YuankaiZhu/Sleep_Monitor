@@ -13,8 +13,7 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
 
-        <activity android:name=".TestResult" android:theme="@style/Theme.Design.Light.NoActionBar">
-        </activity>
+
         <activity android:name=".LogIn"
             android:theme="@style/Theme.Design.Light.NoActionBar">
             <intent-filter>
