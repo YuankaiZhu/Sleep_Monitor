@@ -11,4 +11,9 @@
     <string name="welcome">Welcome</string>
     <string name="fetchdatatest">FetchDataTest</string>
     <string name="linechart">LineChart</string>
+    <string name="temperature">Temperature</string>
+    <string name="motion">Motion</string>
+    <string name="home">Home</string>
+    <string name="temperature_graph">Temperature Graph</string>
+    <string name="motion_graph">Motion Graph</string>
 </resources>

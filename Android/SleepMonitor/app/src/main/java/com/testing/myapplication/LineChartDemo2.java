@@ -23,7 +23,7 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 
-public class LineChartDemo1 extends AppCompatActivity {
+public class LineChartDemo2 extends AppCompatActivity {
     ProgressBar progressBar;
 
     LineChart mpLineChart;
@@ -34,15 +34,16 @@ public class LineChartDemo1 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_line_chart_demo1);
+        setContentView(R.layout.activity_line_chart_demo2);
+
         progressBar = findViewById(R.id.progress);
         Home = findViewById(R.id.Home);
         Temperature = findViewById(R.id.btnLineChart1);
         Motion= findViewById(R.id.btnLineChart2);
 
 
-        mpLineChart = (LineChart) findViewById(R.id.line_chart1);
-        LineDataSet lineDataSet1 = new LineDataSet(FetchTimeTemp(),"Data Set 1");
+        mpLineChart = (LineChart) findViewById(R.id.line_chart2);
+        LineDataSet lineDataSet1 = new LineDataSet(FetchMotion(),"Data Set 1");
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(lineDataSet1);
 
@@ -108,19 +109,8 @@ public class LineChartDemo1 extends AppCompatActivity {
                 });
             }
         });
-
     }
-    private ArrayList<Entry> dataValues1()
-    {
-        ArrayList<Entry> dataVals = new ArrayList<Entry>();
-
-        for (int i = 900000000; i <900004000 ; i++) {
-            dataVals.add(new Entry(i,i));
-        }
-        return  dataVals;
-
-    }
-    private ArrayList<Entry> FetchTimeTemp ()
+    private ArrayList<Entry> FetchMotion ()
     {
         ArrayList<Entry> dataVals = new ArrayList<Entry>();
         FetchData fetchData = new FetchData("http://122.239.216.61/FetchData/FetchData.php");
@@ -132,16 +122,21 @@ public class LineChartDemo1 extends AppCompatActivity {
                     JSONArray arr = new JSONArray(result);
                     for(int i = 0; i < arr.length(); i++){
 
-                        if (arr.getJSONObject(i).getString("time").equals("null")||
-                                arr.getJSONObject(i).getString("temp").equals("null"))
+                        if (arr.getJSONObject(i).getString("id").equals("null")||arr.getJSONObject(i).getString("accel_x").equals("null"))
                         {
                             continue;
                         }
-                        float time_v = 0f;
-                        float temp_v = 0f;
-                        time_v = Float.parseFloat(arr.getJSONObject(i).getString("id"));
-                        temp_v = Float.parseFloat(arr.getJSONObject(i).getString("temp"));
-                        dataVals.add(new Entry(time_v,temp_v));
+                        float id_v = 0f;
+                        float a_x= 0f,a_y= 0f,a_z= 0f,g_x= 0f,g_y= 0f,g_z = 0f,temp_mean = 0f;
+                        id_v = Float.parseFloat(arr.getJSONObject(i).getString("id"));
+                        a_x = Float.parseFloat(arr.getJSONObject(i).getString("accel_x"));
+                        a_y = Float.parseFloat(arr.getJSONObject(i).getString("accel_y"));
+                        a_z = Float.parseFloat(arr.getJSONObject(i).getString("accel_z"));
+                        g_x = Float.parseFloat(arr.getJSONObject(i).getString("gyro_x"));
+                        g_y = Float.parseFloat(arr.getJSONObject(i).getString("gyro_y"));
+                        g_z = Float.parseFloat(arr.getJSONObject(i).getString("gyro_z"));
+                        temp_mean = Math.abs((a_x+a_y+a_z+g_x+g_y+g_z)/6);
+                        dataVals.add(new Entry(id_v,temp_mean));
                     }
                     Toast.makeText(getApplicationContext(),"Fetch Success",Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
@@ -160,44 +155,5 @@ public class LineChartDemo1 extends AppCompatActivity {
         }
         progressBar.setVisibility(View.GONE);
         return  dataVals;
-    }
-    private void FetchTest()
-    {
-        FetchData fetchData = new FetchData("http://122.239.216.61/FetchData/FetchData.php");
-        if (fetchData.startFetch()) {
-            progressBar.setVisibility(View.VISIBLE);
-            if (fetchData.onComplete()) {
-                progressBar.setVisibility(View.GONE);
-                String result = fetchData.getResult();
-                try {
-                    JSONArray arr = new JSONArray(result);
-                    for(int i = 0; i < arr.length(); i++){
-                        float time_v = 0f;
-                        if (arr.getJSONObject(i).getString("time").equals("null")||
-                        arr.getJSONObject(i).getString("temp").equals("null"))
-                        {
-                            continue;
-                        }
-                        time_v = Float.parseFloat(arr.getJSONObject(i).getString("time"));
-                        float temp_v = 0f;
-                        temp_v = Float.parseFloat(arr.getJSONObject(i).getString("temp"));
-
-                        System.out.println(time_v+" "+temp_v);
-                        Toast.makeText(getApplicationContext(),"Fetch Success",Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    Toast.makeText(getApplicationContext(),"JSON Error",Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
-                }
-                //TODO:No Use
-//                                    Intent intent = new Intent(getApplicationContext(),TestResult.class);
-//                                    startActivity(intent);
-//                                    finish();
-            } else {
-                Toast.makeText(getApplicationContext(),"fetchData.onComplete() Error",Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            Toast.makeText(getApplicationContext(),"fetchData.startFetch() Error",Toast.LENGTH_SHORT).show();
-        }
     }
 }

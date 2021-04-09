@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.LineChart;
+
 
 //class LineChartXAxisValueFormatter extends IndexAxisValueFormatter {
 //
@@ -30,7 +32,9 @@ import android.widget.Toast;
 //}
 
 public class MainActivity extends AppCompatActivity  {
-    Button LineChart;
+    Button Home;
+    Button Temperature;
+    Button Motion;
     ProgressBar progressBar;
 
     @Override
@@ -38,15 +42,35 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        LineChart = findViewById(R.id.btnLineChart);
+        Home = findViewById(R.id.Home);
+        Temperature = findViewById(R.id.btnLineChart1);
+        Motion= findViewById(R.id.btnLineChart2);
         progressBar = findViewById(R.id.progress);
 
 
-        LineChart.setOnClickListener(new View.OnClickListener() {
+        //Home button function
+        Home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Fetch Data
-                final char Time;
+                //Start ProgressBar first (Set visibility VISIBLE)
+                progressBar.setVisibility(View.VISIBLE);
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),"LineChartTest",Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                        //End Write and Read data with URL
+                    }
+                });
+            }
+        });
+        //temperature button function
+        Temperature.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 //Start ProgressBar first (Set visibility VISIBLE)
                 progressBar.setVisibility(View.VISIBLE);
                 Handler handler = new Handler(Looper.getMainLooper());
@@ -61,6 +85,26 @@ public class MainActivity extends AppCompatActivity  {
                     }
                 });
                 }
+        });
+
+        //Sleep Motion button function
+        Motion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Start ProgressBar first (Set visibility VISIBLE)
+                progressBar.setVisibility(View.VISIBLE);
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),"LineChartTest",Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), LineChartDemo2.class);
+                        startActivity(intent);
+                        finish();
+                        //End Write and Read data with URL
+                    }
+                });
+            }
         });
     }
 }
