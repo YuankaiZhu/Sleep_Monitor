@@ -66,7 +66,7 @@ public class LogIn extends AppCompatActivity {
                             data[0] = username;
                             data[1] = password;
 
-                            PutData putData = new PutData("http://122.239.219.224/LoginRegister/login.php", "POST", field, data);
+                            PutData putData = new PutData("http://122.239.216.61/LoginRegister/login.php", "POST", field, data);
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {
                                     progressBar.setVisibility(View.GONE);

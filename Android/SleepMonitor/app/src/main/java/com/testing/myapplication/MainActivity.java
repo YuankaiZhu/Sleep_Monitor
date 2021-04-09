@@ -2,41 +2,13 @@ package com.testing.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.LimitLine;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.listener.ChartTouchListener;
-import com.github.mikephil.charting.listener.OnChartGestureListener;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.vishnusivadas.advanced_httpurlconnection.FetchData;
-
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
 
 //class LineChartXAxisValueFormatter extends IndexAxisValueFormatter {
@@ -57,8 +29,8 @@ import java.util.Locale;
 //    }
 //}
 
-public class MainActivity extends AppCompatActivity implements OnChartGestureListener, OnChartValueSelectedListener {
-    Button ButtonFetchDataTest;
+public class MainActivity extends AppCompatActivity  {
+    Button LineChart;
     ProgressBar progressBar;
 
     @Override
@@ -66,11 +38,11 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ButtonFetchDataTest = findViewById(R.id.ButtonFetchDataTest);
+        LineChart = findViewById(R.id.btnLineChart);
         progressBar = findViewById(R.id.progress);
 
 
-        ButtonFetchDataTest.setOnClickListener(new View.OnClickListener() {
+        LineChart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Fetch Data
@@ -81,89 +53,14 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        FetchData fetchData = new FetchData("http://122.239.219.224/FetchData/FetchData.php");
-                        if (fetchData.startFetch()) {
-                            if (fetchData.onComplete()) {
-                                progressBar.setVisibility(View.GONE);
-                                String result = fetchData.getResult();
-                                try {
-                                    JSONArray arr = new JSONArray(result);
-                                    for(int i = 0; i < arr.length(); i++){
-                                        float time_v = 0f;
-                                        time_v = Float.parseFloat(String.valueOf(arr.getJSONObject(i).getDouble("id")));
-                                        float temp_v = 0f;
-                                        temp_v = Float.parseFloat(arr.getJSONObject(i).getString("temp"));
-                                        System.out.println(time_v+" "+temp_v);
-                                        //Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
-                                    }
-                                } catch (JSONException e) {
-                                    Toast.makeText(getApplicationContext(),"JSON Error",Toast.LENGTH_SHORT).show();
-                                    e.printStackTrace();
-                                }
-                                //TODO:No Use
-//                                    Intent intent = new Intent(getApplicationContext(),TestResult.class);
-//                                    startActivity(intent);
-//                                    finish();
-                            } else {
-                                Toast.makeText(getApplicationContext(),"fetchData.onComplete() Error",Toast.LENGTH_SHORT).show();
-                            }
-                        } else {
-                            Toast.makeText(getApplicationContext(),"fetchData.startFetch() Error",Toast.LENGTH_SHORT).show();
-                        }
+                        Toast.makeText(getApplicationContext(),"LineChartTest",Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), LineChartDemo1.class);
+                        startActivity(intent);
+                        finish();
                         //End Write and Read data with URL
                     }
                 });
                 }
         });
-    }
-
-    @Override
-    public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
-
-    }
-
-    @Override
-    public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
-
-    }
-
-    @Override
-    public void onChartLongPressed(MotionEvent me) {
-
-    }
-
-    @Override
-    public void onChartDoubleTapped(MotionEvent me) {
-
-    }
-
-    @Override
-    public void onChartSingleTapped(MotionEvent me) {
-
-    }
-
-    @Override
-    public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
-
-    }
-
-    @Override
-    public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
-
-    }
-
-    @Override
-    public void onChartTranslate(MotionEvent me, float dX, float dY) {
-
-    }
-
-    @Override
-    public void onValueSelected(Entry e, Highlight h) {
-
-    }
-
-    @Override
-    public void onNothingSelected() {
-
     }
 }
