@@ -23,27 +23,20 @@ struct ContentView: View {
 //                        self.mpu6050 = mpu6050
 //                    }
 //                }
-            let tempsStr:[String?] = mpu6050.map{$0.temp}
-            let temps = tempsStr.compactMap{ Double($0 ?? "25") }
-            //[8.2,23.4,54,32,12,37,7,23,43]
-            let accelXStr:[String?] = mpu6050.map{$0.accel_x}
-            let accelX = accelXStr.compactMap{ Double($0 ?? "0") }.map(abs)
-            let accelYStr:[String?] = mpu6050.map{$0.accel_y}
-            let accelY = accelYStr.compactMap{ Double($0 ?? "0") }.map(abs)
-            let accelZStr:[String?] = mpu6050.map{$0.accel_z}
-            let accelZ = accelZStr.compactMap{ Double($0 ?? "0") }.map(abs)
-            let gyroXStr:[String?] = mpu6050.map{$0.gyro_x}
-            let gyroX = gyroXStr.compactMap{ Double($0 ?? "0") }.map(abs)
-            let gyroYStr:[String?] = mpu6050.map{$0.gyro_y}
-            let gyroY = gyroYStr.compactMap{ Double($0 ?? "0") }.map(abs)
-            let gyroZStr:[String?] = mpu6050.map{$0.gyro_z}
-            let gyroZ = gyroZStr.compactMap{ Double($0 ?? "0") }.map(abs)
+
+            let temps = mpu6050.map{$0.temp}.compactMap{ Double($0 ?? "25") }
+            let accelX = mpu6050.map{$0.accel_x}.compactMap{ Double($0 ?? "0") }.map(abs)
+            let accelY = mpu6050.map{$0.accel_y}.compactMap{ Double($0 ?? "0") }.map(abs)
+            let accelZ = mpu6050.map{$0.accel_z}.compactMap{ Double($0 ?? "0") }.map(abs)
+            let gyroX = mpu6050.map{$0.gyro_x}.compactMap{ Double($0 ?? "0") }.map(abs)
+            let gyroY = mpu6050.map{$0.gyro_y}.compactMap{ Double($0 ?? "0") }.map(abs)
+            let gyroZ = mpu6050.map{$0.gyro_z}.compactMap{ Double($0 ?? "0") }.map(abs)
 
             let motionAccel = zip(zip(accelX,accelY).map(+),accelZ).map(+)
             let motionGyro = zip(zip(gyroX,gyroY).map(+),gyroZ).map(+)
             let motion = zip(motionAccel,motionGyro).map(+)
             
-            LineView(data:Array(motion), title: "Sleep Motion").padding()
+            LineView(data:Array(motion), title: "Sleep Motion",legend: "m/s^2").padding()
             LineView(data:Array(temps), title: "Temperature", legend: "Centigrade").padding()
             
             VStack{
