@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B07BE2C826211AB800AF8470 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07BE2C726211AB800AF8470 /* HomeView.swift */; };
 		B0A3001B2620244E00A057CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A3001A2620244E00A057CE /* AppDelegate.swift */; };
 		B0A3001D2620244E00A057CE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A3001C2620244E00A057CE /* SceneDelegate.swift */; };
 		B0A3001F2620244E00A057CE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A3001E2620244E00A057CE /* ContentView.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B07BE2C726211AB800AF8470 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		B0A300172620244E00A057CE /* SleepMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SleepMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0A3001A2620244E00A057CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B0A3001C2620244E00A057CE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 				B0A300222620245000A057CE /* Preview Content */,
 				B0A30033262025A200A057CE /* FetchMPU6050.swift */,
 				B0A300362620272A00A057CE /* MPU6050.swift */,
+				B07BE2C726211AB800AF8470 /* HomeView.swift */,
 			);
 			path = SleepMonitor;
 			sourceTree = "<group>";
@@ -162,6 +165,7 @@
 				B0A30034262025A200A057CE /* FetchMPU6050.swift in Sources */,
 				B0A300372620272A00A057CE /* MPU6050.swift in Sources */,
 				B0A3001B2620244E00A057CE /* AppDelegate.swift in Sources */,
+				B07BE2C826211AB800AF8470 /* HomeView.swift in Sources */,
 				B0A3001D2620244E00A057CE /* SceneDelegate.swift in Sources */,
 				B0A3001F2620244E00A057CE /* ContentView.swift in Sources */,
 			);
