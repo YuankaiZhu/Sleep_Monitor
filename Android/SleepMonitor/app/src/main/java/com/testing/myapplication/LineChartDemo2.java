@@ -9,6 +9,7 @@ import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -31,6 +32,10 @@ public class LineChartDemo2 extends AppCompatActivity {
     Button Temperature;
     Button Motion;
 
+    TextView DeepSleep,REM;
+    public Float DeepSleepf=0f,REMf=0f;
+    public int DSrate,REMrate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +46,10 @@ public class LineChartDemo2 extends AppCompatActivity {
         Temperature = findViewById(R.id.btnLineChart1);
         Motion= findViewById(R.id.btnLineChart2);
 
+        //display DeepSleep REM
+        DeepSleep=(TextView)findViewById(R.id.DeepSleep);
+        REM=(TextView)findViewById(R.id.REM);
+
 
         mpLineChart = (LineChart) findViewById(R.id.line_chart2);
         LineDataSet lineDataSet1 = new LineDataSet(FetchMotion(),"Data Set 1");
@@ -50,6 +59,13 @@ public class LineChartDemo2 extends AppCompatActivity {
         LineData data = new LineData(dataSets);
         mpLineChart.setData(data);
         mpLineChart.invalidate();
+
+        DSrate = (int)((DeepSleepf/(DeepSleepf+REMf))*100);
+        REMrate = (int)((REMf/(DeepSleepf+REMf))*100);
+        System.out.println(DSrate);
+        System.out.println(REMrate);
+        DeepSleep.setText("DeepSleep: "+String.valueOf(DSrate)+"%");
+        REM.setText("REM: "+String.valueOf(REMrate)+"%");
 
         //Home button function
         Home.setOnClickListener(new View.OnClickListener() {
@@ -113,13 +129,14 @@ public class LineChartDemo2 extends AppCompatActivity {
     private ArrayList<Entry> FetchMotion ()
     {
         ArrayList<Entry> dataVals = new ArrayList<Entry>();
-        FetchData fetchData = new FetchData("http://122.239.216.61/FetchData/FetchData.php");
+        FetchData fetchData = new FetchData("http://122.239.216.214/FetchData/FetchData.php");
         if (fetchData.startFetch()) {
             //progressBar.setVisibility(View.VISIBLE);
             if (fetchData.onComplete()) {
                 String result = fetchData.getResult();
                 try {
                     JSONArray arr = new JSONArray(result);
+                    Float DeepLeep,REM;
                     for(int i = 0; i < arr.length(); i++){
 
                         if (arr.getJSONObject(i).getString("id").equals("null")||arr.getJSONObject(i).getString("accel_x").equals("null"))
@@ -127,16 +144,32 @@ public class LineChartDemo2 extends AppCompatActivity {
                             continue;
                         }
                         float id_v = 0f;
-                        float a_x= 0f,a_y= 0f,a_z= 0f,g_x= 0f,g_y= 0f,g_z = 0f,temp_mean = 0f;
+                        double a_x= 0f,a_y= 0f,a_z= 0f,g_x= 0f,g_y= 0f,g_z = 0f,temp_mean = 0f;
+                        float temp_sum = 0f, temp_A = 0f;
                         id_v = Float.parseFloat(arr.getJSONObject(i).getString("id"));
-                        a_x = Float.parseFloat(arr.getJSONObject(i).getString("accel_x"));
-                        a_y = Float.parseFloat(arr.getJSONObject(i).getString("accel_y"));
-                        a_z = Float.parseFloat(arr.getJSONObject(i).getString("accel_z"));
-                        g_x = Float.parseFloat(arr.getJSONObject(i).getString("gyro_x"));
-                        g_y = Float.parseFloat(arr.getJSONObject(i).getString("gyro_y"));
-                        g_z = Float.parseFloat(arr.getJSONObject(i).getString("gyro_z"));
-                        temp_mean = Math.abs((a_x+a_y+a_z+g_x+g_y+g_z)/6);
-                        dataVals.add(new Entry(id_v,temp_mean));
+//                        a_x = Float.parseFloat(arr.getJSONObject(i).getString("accel_x"));
+//                        a_y = Float.parseFloat(arr.getJSONObject(i).getString("accel_y"));
+//                        a_z = Float.parseFloat(arr.getJSONObject(i).getString("accel_z"));
+//                        g_x = Float.parseFloat(arr.getJSONObject(i).getString("gyro_x"));
+//                        g_y = Float.parseFloat(arr.getJSONObject(i).getString("gyro_y"));
+//                        g_z = Float.parseFloat(arr.getJSONObject(i).getString("gyro_z"));
+//                        temp_mean = Math.abs((a_x+a_y+a_z+g_x+g_y+g_z)/6);
+                        a_x = Double.parseDouble(arr.getJSONObject(i).getString("accel_x"));
+                        a_y = Double.parseDouble(arr.getJSONObject(i).getString("accel_y"));
+                        a_z = Double.parseDouble(arr.getJSONObject(i).getString("accel_z"));
+
+                        temp_sum = (float)(Math.pow(a_x,2)+ Math.pow(a_y,2)+ Math.pow(a_z,2));
+                        temp_A = (float)Math.pow(temp_sum,0.5);
+                        //判断是否是深度睡眠 e.g. 实例：合加速度>11。1为深度睡眠
+                        if (temp_A>11.1)
+                        {
+                            DeepSleepf++;
+                        }
+                        else
+                        {
+                            REMf++;
+                        }
+                        dataVals.add(new Entry(id_v,temp_A));
                     }
                     Toast.makeText(getApplicationContext(),"Fetch Success",Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {

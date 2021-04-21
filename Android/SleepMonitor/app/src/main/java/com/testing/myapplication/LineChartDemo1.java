@@ -9,6 +9,7 @@ import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -39,7 +40,6 @@ public class LineChartDemo1 extends AppCompatActivity {
         Home = findViewById(R.id.Home);
         Temperature = findViewById(R.id.btnLineChart1);
         Motion= findViewById(R.id.btnLineChart2);
-
 
         mpLineChart = (LineChart) findViewById(R.id.line_chart1);
         LineDataSet lineDataSet1 = new LineDataSet(FetchTimeTemp(),"Data Set 1");
@@ -123,13 +123,14 @@ public class LineChartDemo1 extends AppCompatActivity {
     private ArrayList<Entry> FetchTimeTemp ()
     {
         ArrayList<Entry> dataVals = new ArrayList<Entry>();
-        FetchData fetchData = new FetchData("http://122.239.216.61/FetchData/FetchData.php");
+        FetchData fetchData = new FetchData("http://122.239.216.214/FetchData/FetchData.php");
         if (fetchData.startFetch()) {
             //progressBar.setVisibility(View.VISIBLE);
             if (fetchData.onComplete()) {
                 String result = fetchData.getResult();
                 try {
                     JSONArray arr = new JSONArray(result);
+
                     for(int i = 0; i < arr.length(); i++){
 
                         if (arr.getJSONObject(i).getString("time").equals("null")||

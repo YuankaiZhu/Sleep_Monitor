@@ -12,7 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".LineChartDemo2"
+        <activity android:name=".SleepQuality"
+            android:theme="@style/Theme.Design.Light.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".LineChartDemo2"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
             android:name=".LineChartDemo1"

@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="48dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="128dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:layout_constraintVertical_bias="1.0"
@@ -37,6 +37,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword" />
 
+
+    //deepSleep
+    <TextView
+        android:id="@+id/DeepSleep"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="76dp"
+        android:fontFamily="@font/poppinsbold"
+        android:text=""
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/REM" />
+
+    //REM
+    <TextView
+        android:id="@+id/REM"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="76dp"
+        android:fontFamily="@font/poppinsbold"
+        android:text=""
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <Button
         android:id="@+id/Home"
         style="@style/Widget.AppCompat.Button.Colored"
@@ -49,8 +75,7 @@
         android:textColorHint="@color/teal_200"
         app:backgroundTint="#009688"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/line_chart2" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnLineChart1"
@@ -63,8 +88,7 @@
         android:textColorHint="@color/teal_200"
         app:backgroundTint="#009688"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/Home"
-        app:layout_constraintTop_toBottomOf="@+id/line_chart2" />
+        app:layout_constraintStart_toEndOf="@+id/Home" />
 
     <Button
         android:id="@+id/btnLineChart2"
@@ -79,8 +103,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/btnLineChart1"
-        app:layout_constraintTop_toBottomOf="@+id/line_chart2" />
+        app:layout_constraintStart_toEndOf="@+id/btnLineChart1" />
 
 
 

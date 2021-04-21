@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -33,6 +34,8 @@ public class SignUp extends AppCompatActivity {
         buttonSignUp = findViewById(R.id.buttonSignUp);
         textViewLogin = findViewById(R.id.loginText);
         progressBar =  findViewById(R.id.progress);
+
+        textInputEditTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
         textViewLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +76,7 @@ public class SignUp extends AppCompatActivity {
                             data[2] = password;
                             data[3] = email;
 
-                            PutData putData = new PutData("http://122.239.216.61/LoginRegister/signup.php", "POST", field, data);
+                            PutData putData = new PutData("http://122.239.216.214/LoginRegister/signup.php", "POST", field, data);
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {
                                     progressBar.setVisibility(View.GONE);
