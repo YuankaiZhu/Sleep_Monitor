@@ -20,3 +20,6 @@ This part of updates mainly focuses on the implementation of mobile application.
 We development both android and IOS version of mobile application to monitor our sleep. For android project files, they are in the Android folder and for IOS project files, they are in the IOS folder. 
 In android, we implement the user authority interface and the data visualization interface. User authority interface includes basic functions for user to register and login. In data visualization interface, we plot the sleep motion diagram and sleep environment diagram. 
 For IOS, only data visualization interface is implemented yet and it also includes sleep motion diagram, sleep environment diagram plus the statistic description of sleep environment. 
+
+### Release ver. 1.0 Description:
+Deep Sleep statistic and REM Sleep statistic in Android version is added below the sleep motion graph.
